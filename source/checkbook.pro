@@ -11,13 +11,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
             gui/MainWindow.cpp \
-            gui/main_widgets/ManageAccounts.cpp
+            gui/main_widgets/ManageAccounts.cpp \
+            gui/information_dialogs/AccountInformation.cpp
 
 HEADERS  += gui/MainWindow.hpp \
-            gui/main_widgets/ManageAccounts.hpp
+            gui/main_widgets/ManageAccounts.hpp \
+            gui/information_dialogs/AccountInformation.hpp
 
 FORMS    += gui/MainWindow.ui \
-            gui/main_widgets/ManageAccounts.ui
+            gui/main_widgets/ManageAccounts.ui \
+            gui/information_dialogs/AccountInformation.ui
 
 #RESOURCES += 
 
