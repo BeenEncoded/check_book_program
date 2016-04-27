@@ -39,11 +39,11 @@ namespace data
             
             read_string(in, temps);
             t.name = QString::fromStdString(temps);
-            for(std::string::iterator it{temps.begin()}, it != temps.end(); ++it) (*it) = 0; 
+            for(std::string::iterator it{temps.begin()}; it != temps.end(); ++it) (*it) = 0; 
             
             read_string(in, temps);
             t.description = QString::fromStdString(temps);
-            for(std::string::iterator it{temps.begin()}, it != temps.end(); ++it) (*it) = 0;
+            for(std::string::iterator it{temps.begin()}; it != temps.end(); ++it) (*it) = 0;
         }
         return in;
     }

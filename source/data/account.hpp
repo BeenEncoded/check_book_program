@@ -32,7 +32,12 @@ namespace data
         std::vector<transaction_data> transactions;
     };
     
-    
+	namespace file
+	{
+
+	}
+
+
 }
 
 #endif

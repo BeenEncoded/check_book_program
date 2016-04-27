@@ -2,11 +2,25 @@ QT       += core gui widgets
 
 CONFIG += C++14 debug
 
-LIBS += /usr/lib/libboost_system.a /usr/lib/libboost_filesystem.a /usr/lib/libboost_regex.a
+QMAKE_CXXFLAGS += /IC:\Users\include #additional includes
+
+#release libs
+CONFIG(release, debug|release) {
+	LIBS += "C:\lib\x64\libboost_system-vc140-mt-1_60.lib" \
+			"C:\lib\x64\libboost_filesystem-vc140-mt-1_60.lib" \
+			"C:\lib\x64\libboost_regex-vc140-mt-1_60.lib"
+}
+
+#debug libs
+CONFIG(debug, debug|release) {
+	LIBS += "C:\lib\x64\libboost_system-vc140-mt-gd-1_60.lib" \
+			"C:\lib\x64\libboost_filesystem-vc140-mt-gd-1_60.lib" \
+			"C:\lib\x64\libboost_regex-vc140-mt-gd-1_60.lib"
+}
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Checkbook_Program
+TARGET = checkbook_program
 TEMPLATE = app
 
 SOURCES += main.cpp \

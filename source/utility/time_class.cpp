@@ -119,9 +119,7 @@ namespace tdata
                 t.year,
                 t.wday,
                 t.yday,
-                t.isdst,
-                tempt.tm_gmtoff,
-                tempt.tm_zone
+                t.isdst
             };
         }
         
@@ -253,7 +251,6 @@ namespace tdata
                     (this->cur_time.tm_yday == t.cur_time.tm_yday) && 
                     (this->cur_time.tm_mon == t.cur_time.tm_mon) && 
                     (this->cur_time.tm_year == t.cur_time.tm_year) && 
-                    (std::strcmp(this->cur_time.tm_zone, t.cur_time.tm_zone) == 0) && 
                     (this->cur_time.tm_isdst == t.cur_time.tm_isdst));
     }
     
@@ -267,7 +264,6 @@ namespace tdata
                     (this->cur_time.tm_yday != t.cur_time.tm_yday) || 
                     (this->cur_time.tm_mon != t.cur_time.tm_mon) || 
                     (this->cur_time.tm_year != t.cur_time.tm_year) || 
-                    (std::strcmp(this->cur_time.tm_zone, t.cur_time.tm_zone) != 0) || 
                     (this->cur_time.tm_isdst != t.cur_time.tm_isdst));
     }
     

@@ -72,7 +72,7 @@ namespace utility
          * @return a bool: true if the read was a success, false otherwise.
          */
         template<>
-        __attribute__((unused)) bool safe_getline<std::string>(std::istream& in, std::string& s, const char& delimiter)
+        bool safe_getline<std::string>(std::istream& in, std::string& s, const char& delimiter)
         {
             bool success(false);
             std::istream::pos_type previous_position(in.tellg());
