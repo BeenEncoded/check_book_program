@@ -30,7 +30,8 @@ SOURCES += main.cpp \
             utility/filesystem.cpp \
             utility/stream_operations.cpp \
             utility/time_class.cpp \
-            data/account.cpp
+            data/account.cpp \
+			data/global.cpp
 
 HEADERS  += gui/MainWindow.hpp \
             gui/main_widgets/ManageAccounts.hpp \
@@ -38,7 +39,8 @@ HEADERS  += gui/MainWindow.hpp \
             utility/filesystem.hpp \
             utility/stream_operations.hpp \
             utility/time_class.hpp \
-            data/account.hpp
+            data/account.hpp \
+			data/global.hpp
 
 FORMS    += gui/MainWindow.ui \
             gui/main_widgets/ManageAccounts.ui \

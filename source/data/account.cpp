@@ -43,6 +43,7 @@ namespace
 
 		data::account_data account;
 		std::ifstream in{p.string(), std::ios::binary};
+		std::string temps;
 
 		if (in.good())
 		{
@@ -235,7 +236,7 @@ namespace data
 			return i;
 		}
 
-		void save(const account_data& account, const boost::filesystem::path& folder)
+		void save(account_data& account, const boost::filesystem::path& folder)
 		{
 			using boost::filesystem::is_directory;
 			using boost::filesystem::is_symlink;
