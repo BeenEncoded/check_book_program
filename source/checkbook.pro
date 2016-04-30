@@ -27,6 +27,7 @@ SOURCES += main.cpp \
             gui/MainWindow.cpp \
             gui/main_widgets/ManageAccounts.cpp \
             gui/information_dialogs/AccountInformation.cpp \
+			gui/data_input/EditAccount.cpp \
             utility/filesystem.cpp \
             utility/stream_operations.cpp \
             utility/time_class.cpp \
@@ -36,6 +37,7 @@ SOURCES += main.cpp \
 HEADERS  += gui/MainWindow.hpp \
             gui/main_widgets/ManageAccounts.hpp \
             gui/information_dialogs/AccountInformation.hpp \
+			gui/data_input/EditAccount.hpp \
             utility/filesystem.hpp \
             utility/stream_operations.hpp \
             utility/time_class.hpp \
@@ -44,7 +46,8 @@ HEADERS  += gui/MainWindow.hpp \
 
 FORMS    += gui/MainWindow.ui \
             gui/main_widgets/ManageAccounts.ui \
-            gui/information_dialogs/AccountInformation.ui
+            gui/information_dialogs/AccountInformation.ui \
+			gui/data_input/EditAccount.ui
 
 #RESOURCES += 
 

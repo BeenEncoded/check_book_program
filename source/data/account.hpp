@@ -46,6 +46,7 @@ namespace data
 		using boost::filesystem::path;
 
 		std::vector<account_data> load_basic(const path& = (global::root / path{account_data::FOLDER_NAME}));
+		account_data load_account(const decltype(account_data::id)&, const path& = (global::root / path{account_data::FOLDER_NAME}));
 		std::vector<account_data> load(const path& = (global::root / path{account_data::FOLDER_NAME}));
 		std::set<decltype(account_data::id)> account_ids(const path& = (global::root / path{account_data::FOLDER_NAME}));
 		void save(account_data&, const path& = (global::root / path{account_data::FOLDER_NAME}));

@@ -205,12 +205,36 @@ namespace data
 				{
 					if(is_regular_file(it->path()))
 					{
-						accounts.push_back(load_account(it->path()));
+						accounts.push_back(::load_account(it->path()));
 						if(accounts.back().id == 0) accounts.pop_back();
 					}
 				}
 			}
 			return accounts;
+		}
+
+		account_data load_account(const decltype(account_data::id)& id, const boost::filesystem::path& folder)
+		{
+			using boost::filesystem::is_directory;
+			using boost::filesystem::is_symlink;
+			using boost::filesystem::is_regular_file;
+			using filesystem::glob;
+
+			if(is_directory(folder) && !is_symlink(folder))
+			{
+				for(glob it{folder, account_data::REGEX}; !it.end(); ++it)
+				{
+					if(is_regular_file(*it))
+					{
+						if(load_id(it->path()) == id)
+						{
+							return ::load_account(it->path());
+						}
+					}
+				}
+			}
+			throw std::runtime_error{"account_data load_account(const decltype(account_data::id)& id, const \
+boost::filesystem::path& folder): ERROR invalid id passed as argument!"};
 		}
 
 		std::set<decltype(account_data::id)> account_ids(const boost::filesystem::path& folder)
