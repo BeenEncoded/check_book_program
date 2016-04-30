@@ -159,13 +159,40 @@ namespace data
     
 }
 
+//misc functions:
+namespace data
+{
+	/**
+	 Calculates the resulting balance each transaction results in after application to the account.
+	 The index of each result corresponds to its index in the list of transactions passed as the argument.
+	*/
+	std::vector<int_least32_t> calculate_resulting_balances(const std::vector<transaction_data>& transactions)
+	{
+		std::vector<int_least32_t> results;
+		
+		for(std::size_t x{(transactions.size() - 1)}; true; --x)
+		{
+			if(!results.empty())
+			{
+				results.insert(results.begin(), (results.front() + transactions[x].value));
+			}
+			else results.insert(results.begin(), transactions[x].value);
+
+			if(x == 0) break;
+		}
+		return results;
+	}
+
+
+}
+
 namespace data
 {
 	namespace file
 	{
 		/**
-		 * Loads a list of the available accounts.  Only loads basic information
-		 * for each account in order to conserve memory.  Meant for things like menus.
+		 Loads a list of the available accounts.  Only loads basic information
+		 for each account in order to conserve memory.  Meant for things like menus.
 		*/
 		std::vector<account_data> load_basic(const boost::filesystem::path& folder)
 		{
@@ -213,6 +240,9 @@ namespace data
 			return accounts;
 		}
 
+		/**
+		Loads a single account given its id, and, optionally, its folder.
+		*/
 		account_data load_account(const decltype(account_data::id)& id, const boost::filesystem::path& folder)
 		{
 			using boost::filesystem::is_directory;
@@ -237,6 +267,9 @@ namespace data
 boost::filesystem::path& folder): ERROR invalid id passed as argument!"};
 		}
 
+		/**
+		Returns a set containing the ids of all the accounts.
+		*/
 		std::set<decltype(account_data::id)> account_ids(const boost::filesystem::path& folder)
 		{
 			using filesystem::glob;
@@ -303,6 +336,9 @@ boost::filesystem::path& folder): ERROR invalid id passed as argument!"};
 			out.close();
 		}
 
+		/**
+		Removes the account's file given its id, and, optionally, its folder.
+		*/
 		void remove(const decltype(account_data::id)& id, const boost::filesystem::path& folder)
 		{
 			using filesystem::glob;

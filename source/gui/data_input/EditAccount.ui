@@ -242,12 +242,12 @@
          <widget class="QPlainTextEdit" name="transaction_description"/>
         </item>
         <item>
-         <widget class="QPushButton" name="save_transaction_button">
+         <widget class="QPushButton" name="apply_transaction_button">
           <property name="toolTip">
-           <string>Save the changes you made to the transaction</string>
+           <string>Apply the changes you made to the transaction</string>
           </property>
           <property name="text">
-           <string>Save Changes</string>
+           <string>Apply Changes</string>
           </property>
          </widget>
         </item>
@@ -277,20 +277,21 @@
    <sender>cancel_button</sender>
    <signal>clicked()</signal>
    <receiver>EditAccount</receiver>
-   <slot>closeMenu()</slot>
+   <slot>cancelClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>196</x>
-     <y>781</y>
+     <x>188</x>
+     <y>776</y>
     </hint>
     <hint type="destinationlabel">
-     <x>345</x>
-     <y>1124</y>
+     <x>253</x>
+     <y>970</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>closeMenu()</slot>
+  <slot>cancelClicked()</slot>
  </slots>
 </ui>

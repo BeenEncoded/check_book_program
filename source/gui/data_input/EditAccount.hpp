@@ -19,10 +19,14 @@ public:
 
 public slots:
 	void closeMenu();
+	void cancelClicked();
     
 private:
     Ui::EditAccount *ui;
 	data::account_data account;
+
+	void set_to(data::account_data&);
+	void save();
 
 };
 
