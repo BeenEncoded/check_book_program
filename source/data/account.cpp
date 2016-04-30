@@ -303,7 +303,7 @@ boost::filesystem::path& folder): ERROR invalid id passed as argument!"};
 			out.close();
 		}
 
-		void remove(const account_data& account, const boost::filesystem::path& folder)
+		void remove(const decltype(account_data::id)& id, const boost::filesystem::path& folder)
 		{
 			using filesystem::glob;
 			using boost::filesystem::is_directory;
@@ -316,7 +316,7 @@ boost::filesystem::path& folder): ERROR invalid id passed as argument!"};
 				{
 					if(is_regular_file(*it))
 					{
-						if(load_id(it->path()) == account.id)
+						if(load_id(it->path()) == id)
 						{
 							boost::filesystem::remove(it->path());
 							return;

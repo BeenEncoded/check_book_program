@@ -16,6 +16,9 @@ class EditAccount : public QWidget
 public:
     explicit EditAccount(data::account_data&, QWidget* = nullptr);
     ~EditAccount();
+
+public slots:
+	void closeMenu();
     
 private:
     Ui::EditAccount *ui;

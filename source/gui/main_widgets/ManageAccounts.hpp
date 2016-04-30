@@ -23,6 +23,7 @@ public slots:
 	void accountSelected(QListWidgetItem*);
 	void editButtonClicked();
 	void newAccount();
+	void deleteAccount();
     
 private:
     Ui::ManageAccounts *ui;

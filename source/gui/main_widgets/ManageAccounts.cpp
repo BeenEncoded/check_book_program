@@ -2,6 +2,7 @@
 #include <vector>
 #include <QString>
 #include <QListWidgetItem>
+#include <QMessageBox>
 
 #include "ManageAccounts.hpp"
 #include "data/account.hpp"
@@ -34,7 +35,7 @@ void ManageAccounts::accountSelected(QListWidgetItem* item)
 	global::main_window->setCentralWidget(
 		new EditAccount(
 			data::file::load_account(
-				this->basic_info[this->ui->account_list->row(item)].id), this));
+				this->basic_info[this->ui->account_list->row(item)].id), global::main_window));
 }
 
 void ManageAccounts::editButtonClicked()
@@ -42,7 +43,7 @@ void ManageAccounts::editButtonClicked()
 	if(!this->ui->account_list->selectedItems().empty())
 	{
 		global::main_window->setCentralWidget(new EditAccount(
-			data::file::load_account(this->basic_info[this->ui->account_list->currentRow()].id), this));
+			data::file::load_account(this->basic_info[this->ui->account_list->currentRow()].id), global::main_window));
 	}
 }
 
@@ -50,6 +51,21 @@ void ManageAccounts::newAccount()
 {
 	global::main_window->setCentralWidget(
 		new EditAccount(
-			data::account_data{"", 0, std::vector<data::transaction_data>{}}, this));
+			data::account_data{"", 0, std::vector<data::transaction_data>{}}, global::main_window));
+}
+
+void ManageAccounts::deleteAccount()
+{
+	if(!this->ui->account_list->selectedItems().empty())
+	{
+		auto index = this->ui->account_list->currentRow();
+		auto answer = QMessageBox::question(this, "Are you sure??", QString::fromStdWString(L"Do you really want to delete \"" + 
+			this->basic_info[index].name.toStdWString() + L"\"??  This is permanent!"));
+		if(answer == QMessageBox::Yes)
+		{
+			data::file::remove(this->basic_info[index].id);
+			this->basic_info.erase(this->basic_info.begin() + index);
+		}
+	}
 }
 

@@ -50,7 +50,7 @@ namespace data
 		std::vector<account_data> load(const path& = (global::root / path{account_data::FOLDER_NAME}));
 		std::set<decltype(account_data::id)> account_ids(const path& = (global::root / path{account_data::FOLDER_NAME}));
 		void save(account_data&, const path& = (global::root / path{account_data::FOLDER_NAME}));
-		void remove(const account_data&, const path& = (global::root / path{account_data::FOLDER_NAME}));
+		void remove(const decltype(account_data::id)&, const path& = (global::root / path{account_data::FOLDER_NAME}));
 
 	}
 

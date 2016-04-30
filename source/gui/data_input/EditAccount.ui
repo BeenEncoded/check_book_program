@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>788</width>
-    <height>374</height>
+    <width>1298</width>
+    <height>841</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,6 +66,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="cancel_button">
+          <property name="toolTip">
+           <string>Close this window without saving anything</string>
+          </property>
           <property name="text">
            <string>Cancel</string>
           </property>
@@ -111,7 +114,7 @@
          <property name="maxLength">
           <number>50</number>
          </property>
-         <property name="clearButtonEnabled" stdset="0">
+         <property name="clearButtonEnabled">
           <bool>true</bool>
          </property>
         </widget>
@@ -238,6 +241,16 @@
         <item>
          <widget class="QPlainTextEdit" name="transaction_description"/>
         </item>
+        <item>
+         <widget class="QPushButton" name="save_transaction_button">
+          <property name="toolTip">
+           <string>Save the changes you made to the transaction</string>
+          </property>
+          <property name="text">
+           <string>Save Changes</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>
@@ -259,5 +272,25 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>cancel_button</sender>
+   <signal>clicked()</signal>
+   <receiver>EditAccount</receiver>
+   <slot>closeMenu()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>196</x>
+     <y>781</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>345</x>
+     <y>1124</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>closeMenu()</slot>
+ </slots>
 </ui>

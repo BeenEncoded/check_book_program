@@ -150,10 +150,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>delete_button</sender>
+   <signal>clicked()</signal>
+   <receiver>ManageAccounts</receiver>
+   <slot>deleteAccount()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>454</x>
+     <y>677</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>513</x>
+     <y>903</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>accountSelected(QListWidgetItem*)</slot>
   <slot>editButtonClicked()</slot>
   <slot>newAccount()</slot>
+  <slot>deleteAccount()</slot>
  </slots>
 </ui>
