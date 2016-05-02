@@ -14,12 +14,13 @@ class EditAccount : public QWidget
     Q_OBJECT
     
 public:
-    explicit EditAccount(data::account_data&, QWidget* = nullptr);
+    explicit EditAccount(const data::account_data&, QWidget* = nullptr);
     ~EditAccount();
 
 public slots:
 	void closeMenu();
 	void cancelClicked();
+	void doneClicked();
     
 private:
     Ui::EditAccount *ui;

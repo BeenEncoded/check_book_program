@@ -65,6 +65,12 @@ void ManageAccounts::deleteAccount()
 		{
 			data::file::remove(this->basic_info[index].id);
 			this->basic_info.erase(this->basic_info.begin() + index);
+
+			this->ui->account_list->clear();
+			for(unsigned int x{0}; x < this->basic_info.size(); ++x)
+			{
+				this->ui->account_list->addItem(this->basic_info[x].name);
+			}
 		}
 	}
 }

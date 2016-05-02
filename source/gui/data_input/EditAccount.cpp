@@ -29,10 +29,10 @@ namespace
 
 }
 
-EditAccount::EditAccount(data::account_data& acc, QWidget *parent) : 
+EditAccount::EditAccount(const data::account_data& acc, QWidget *parent) : 
         QWidget{parent},
         ui{new Ui::EditAccount},
-		account{std::move(acc)}
+		account{acc}
 {
     this->ui->setupUi(this);
 	this->set_to(this->account);
@@ -75,5 +75,11 @@ void EditAccount::cancelClicked()
 	{
 		this->closeMenu();
 	}
+}
+
+void EditAccount::doneClicked()
+{
+	this->save();
+	this->closeMenu();
 }
 

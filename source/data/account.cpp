@@ -10,6 +10,7 @@
 #include "account.hpp"
 #include "utility/stream_operations.hpp"
 #include "utility/filesystem.hpp"
+#include "data/global.hpp"
 
 namespace
 {
@@ -36,6 +37,9 @@ namespace
 		return account;
 	}
 
+	/**
+	Loads basic information about an account.
+	*/
 	inline data::account_data load_basic_account(const boost::filesystem::path& p)
 	{
 		using utility::in_mem;
@@ -57,6 +61,9 @@ namespace
 		return account;
 	}
 
+	/**
+	Loads the id of an account given the filesystem path to that account.
+	*/
 	inline decltype(data::account_data::id) load_id(const boost::filesystem::path& p)
 	{
 		using boost::filesystem::is_regular_file;
@@ -71,6 +78,24 @@ namespace
 			in.close();
 		}
 		return id;
+	}
+
+	/**
+	Sanitizes a filename so that it is garunteed not to create problems with
+	the filesystem.
+	*/
+	inline std::string sanitize_filename(const std::string& s)
+	{
+		std::string temps{s};
+
+		for(std::string::iterator it{temps.begin()}; it != temps.end(); ++it)
+		{
+			if(std::string{global::letters}.find(*it) == std::string::npos)
+			{
+				*it = '_';
+			}
+		}
+		return temps;
 	}
 
 
@@ -328,7 +353,7 @@ boost::filesystem::path& folder): ERROR invalid id passed as argument!"};
 			//if we didn't find its file, create a filename for it:
 			if(!exists(file))
 			{
-				file = (folder / path{std::to_string(account.id) + utf_convert{}.to_bytes(account_data::FILE_EXTENSION)});
+				file = (folder / path{sanitize_filename(account.name.toStdString()) + std::to_string(account.id) + utf_convert{}.to_bytes(account_data::FILE_EXTENSION)});
 			}
 
 			std::ofstream out{file.string(), std::ios::binary};

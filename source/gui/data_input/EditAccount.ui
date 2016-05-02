@@ -289,9 +289,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>done_button</sender>
+   <signal>clicked()</signal>
+   <receiver>EditAccount</receiver>
+   <slot>doneClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>90</x>
+     <y>780</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>95</x>
+     <y>1006</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>closeMenu()</slot>
   <slot>cancelClicked()</slot>
+  <slot>doneClicked()</slot>
  </slots>
 </ui>

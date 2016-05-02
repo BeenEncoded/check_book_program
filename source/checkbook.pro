@@ -32,7 +32,8 @@ SOURCES += main.cpp \
             utility/stream_operations.cpp \
             utility/time_class.cpp \
             data/account.cpp \
-			data/global.cpp
+			data/global.cpp \
+			gui/data_input/NewTransaction.cpp
 
 HEADERS  += gui/MainWindow.hpp \
             gui/main_widgets/ManageAccounts.hpp \
@@ -42,12 +43,14 @@ HEADERS  += gui/MainWindow.hpp \
             utility/stream_operations.hpp \
             utility/time_class.hpp \
             data/account.hpp \
-			data/global.hpp
+			data/global.hpp \
+			gui/data_input/NewTransaction.hpp
 
 FORMS    += gui/MainWindow.ui \
             gui/main_widgets/ManageAccounts.ui \
             gui/information_dialogs/AccountInformation.ui \
-			gui/data_input/EditAccount.ui
+			gui/data_input/EditAccount.ui \
+			gui/data_input/NewTransaction.ui
 
 #RESOURCES += 
 
