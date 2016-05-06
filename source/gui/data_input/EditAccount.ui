@@ -18,7 +18,7 @@
     <widget class="QFrame" name="frame">
      <property name="maximumSize">
       <size>
-       <width>250</width>
+       <width>400</width>
        <height>16777215</height>
       </size>
      </property>
@@ -221,7 +221,17 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="transaction_value"/>
+           <widget class="QDoubleSpinBox" name="transaction_value">
+            <property name="minimum">
+             <double>-100000000000000000000.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>100000000000000000000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>1.000000000000000</double>
+            </property>
+           </widget>
           </item>
           <item>
            <spacer name="horizontalSpacer_6">
@@ -280,8 +290,8 @@
    <slot>cancelClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>188</x>
-     <y>776</y>
+     <x>373</x>
+     <y>803</y>
     </hint>
     <hint type="destinationlabel">
      <x>253</x>
@@ -305,10 +315,109 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>transaction_list</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>EditAccount</receiver>
+   <slot>updateTransactionModification()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>155</x>
+     <y>256</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>735</x>
+     <y>1335</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>transaction_name</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>EditAccount</receiver>
+   <slot>updateTransactionApplyButton()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>695</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1419</x>
+     <y>-67</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>transaction_value</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>EditAccount</receiver>
+   <slot>updateTransactionApplyButton()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>814</x>
+     <y>217</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1451</x>
+     <y>304</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>transaction_description</sender>
+   <signal>textChanged()</signal>
+   <receiver>EditAccount</receiver>
+   <slot>updateTransactionApplyButton()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1017</x>
+     <y>413</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1603</x>
+     <y>464</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>transaction_date</sender>
+   <signal>dateChanged(QDate)</signal>
+   <receiver>EditAccount</receiver>
+   <slot>updateTransactionApplyButton()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1212</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1885</x>
+     <y>423</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>apply_transaction_button</sender>
+   <signal>clicked()</signal>
+   <receiver>EditAccount</receiver>
+   <slot>applyTransaction()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>902</x>
+     <y>467</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1029</x>
+     <y>958</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>closeMenu()</slot>
   <slot>cancelClicked()</slot>
   <slot>doneClicked()</slot>
+  <slot>updateTransactionModification()</slot>
+  <slot>updateTransactionApplyButton()</slot>
+  <slot>applyTransaction()</slot>
  </slots>
 </ui>

@@ -24,6 +24,8 @@ public slots:
 	void editButtonClicked();
 	void newAccount();
 	void deleteAccount();
+	void newTransaction();
+	void updateButtons();
     
 private:
     Ui::ManageAccounts *ui;

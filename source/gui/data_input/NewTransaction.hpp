@@ -20,7 +20,6 @@ public:
 
 public slots:
 	void accept();
-	void reject();
 
 private:
 	Ui::NewTransaction *ui;

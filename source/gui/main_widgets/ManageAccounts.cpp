@@ -9,6 +9,7 @@
 #include "data/global.hpp"
 #include "ui_ManageAccounts.h"
 #include "gui/data_input/EditAccount.hpp"
+#include "gui/data_input/NewTransaction.hpp"
 
 ManageAccounts::ManageAccounts(QWidget *parent) : 
         QWidget{parent},
@@ -23,6 +24,7 @@ ManageAccounts::ManageAccounts(QWidget *parent) :
 	{
 		this->ui->account_list->addItem(this->basic_info[x].name);
 	}
+	this->updateButtons();
 }
 
 ManageAccounts::~ManageAccounts()
@@ -71,7 +73,32 @@ void ManageAccounts::deleteAccount()
 			{
 				this->ui->account_list->addItem(this->basic_info[x].name);
 			}
+			this->updateButtons();
 		}
 	}
+}
+
+void ManageAccounts::newTransaction()
+{
+	if(!this->ui->account_list->selectedItems().empty())
+	{
+		auto index = this->ui->account_list->currentRow();
+		if((index >= 0) && (index <  this->basic_info.size()))
+		{
+			data::account_data account{data::file::load_account(this->basic_info[index].id)};
+			NewTransaction d{account, this};
+			d.setModal(true);
+			d.exec();
+		}
+	}
+}
+
+void ManageAccounts::updateButtons()
+{
+	bool enable{!this->ui->account_list->selectedItems().empty()};
+
+	this->ui->new_transaction_button->setEnabled(enable);
+	this->ui->delete_button->setEnabled(enable);
+	this->ui->edit_button->setEnabled(enable);
 }
 

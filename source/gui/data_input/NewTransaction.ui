@@ -51,7 +51,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="transaction_value"/>
+      <widget class="QDoubleSpinBox" name="transaction_value">
+       <property name="minimum">
+        <double>-100000000000000005366162204393472.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>100000000000000007629769841091887003294964970946560.000000000000000</double>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer">
@@ -67,7 +74,11 @@
       </spacer>
      </item>
      <item>
-      <widget class="QDateEdit" name="transaction_date"/>
+      <widget class="QDateEdit" name="transaction_date">
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

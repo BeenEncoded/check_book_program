@@ -6,6 +6,7 @@
 #include <set>
 #include <codecvt>
 #include <locale>
+#include <QtGlobal>
 
 #include "account.hpp"
 #include "utility/stream_operations.hpp"
@@ -112,7 +113,7 @@ namespace data
         if(out.good())
         {
             out_mem(out, t.value);
-            out<< t.date;
+            out_mem(out, t.date);
             write_string(out, t.name.toStdString());
             write_string(out, t.description.toStdString());
         }
@@ -124,14 +125,14 @@ namespace data
         using utility::in_mem;
         using utility::read_string;
         
-        t = transaction_data{(decltype(t.value))0, tdata::time_class{}, "", ""};
+        t = transaction_data{(decltype(t.value))0, (qint64)0, "", ""};
         std::string temps;
         
         in.peek();
         if(in.good())
         {
             in_mem(in, t.value);
-            in>> t.date;
+			in_mem(in, t.date);
             
             read_string(in, temps);
             t.name = QString::fromStdString(temps);

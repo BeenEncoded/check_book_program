@@ -21,13 +21,20 @@ public slots:
 	void closeMenu();
 	void cancelClicked();
 	void doneClicked();
+	void updateTransactionModification();
+	void updateTransactionApplyButton();
+	void applyTransaction();
     
 private:
     Ui::EditAccount *ui;
 	data::account_data account;
+	data::transaction_data* current;
 
 	void set_to(data::account_data&);
 	void save();
+	void settmod(data::transaction_data&);
+	void clearmod();
+	bool tmodified();
 
 };
 

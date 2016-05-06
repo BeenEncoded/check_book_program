@@ -206,11 +206,45 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>new_transaction_button</sender>
+   <signal>clicked()</signal>
+   <receiver>ManageAccounts</receiver>
+   <slot>newTransaction()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>579</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>947</x>
+     <y>-97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>account_list</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>ManageAccounts</receiver>
+   <slot>updateButtons()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>645</x>
+     <y>354</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1669</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>accountSelected(QListWidgetItem*)</slot>
   <slot>editButtonClicked()</slot>
   <slot>newAccount()</slot>
   <slot>deleteAccount()</slot>
+  <slot>newTransaction()</slot>
+  <slot>updateButtons()</slot>
  </slots>
 </ui>

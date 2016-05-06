@@ -5,6 +5,8 @@
 #include <iostream>
 #include <boost/filesystem.hpp>
 #include <set>
+#include <QDate>
+#include <QtGlobal>
 
 #include "utility/time_class.hpp"
 #include "data/global.hpp"
@@ -24,8 +26,8 @@ namespace data
     
     struct transaction_data
     {
-        int_least32_t value;
-        tdata::time_class date;
+        int_least32_t value; //the monetary value of this transaction multiplied by 100.
+        qint64 date;
         QString name, description;
     };
     
@@ -33,7 +35,7 @@ namespace data
     {
         QString name;
         int_least16_t id; //supports 65,536 account ids... I think that will be fine.
-        std::vector<transaction_data> transactions;
+        std::vector<transaction_data> transactions; //A list of transactions beginning with the most recent (index 0) and ending with the oldest
 
 		static constexpr const wchar_t* const FILE_EXTENSION{L".account"};
 		static constexpr const wchar_t* const FOLDER_NAME{L"Accounts"};
