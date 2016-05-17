@@ -10,6 +10,7 @@
 #include "ui_ManageAccounts.h"
 #include "gui/data_input/EditAccount.hpp"
 #include "gui/data_input/NewTransaction.hpp"
+#include "gui/information_dialogs/AccountInformation.hpp"
 
 ManageAccounts::ManageAccounts(QWidget *parent) : 
         QWidget{parent},
@@ -34,10 +35,12 @@ ManageAccounts::~ManageAccounts()
 
 void ManageAccounts::accountSelected(QListWidgetItem* item)
 {
-	global::main_window->setCentralWidget(
-		new EditAccount(
-			data::file::load_account(
-				this->basic_info[this->ui->account_list->row(item)].id), global::main_window));
+	using data::file::load_account;
+
+	AccountInformation dialog{global::main_window, 
+		load_account(this->basic_info[this->ui->account_list->row(item)].id)};
+	dialog.setModal(true);
+	dialog.exec();
 }
 
 void ManageAccounts::editButtonClicked()

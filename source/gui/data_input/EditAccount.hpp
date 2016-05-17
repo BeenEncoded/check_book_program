@@ -21,6 +21,8 @@ public slots:
 	void closeMenu();
 	void cancelClicked();
 	void doneClicked();
+
+	//transaction modification
 	void updateTransactionModification();
 	void updateTransactionApplyButton();
 	void applyTransaction();

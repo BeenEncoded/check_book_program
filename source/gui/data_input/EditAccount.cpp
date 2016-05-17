@@ -123,6 +123,42 @@ you really want to discard the changes?");
 }
 
 /**
+Applys the transaction information in the transaction gui to the 
+currently selected transaction, then it sets the "current"
+pointer to null and clears the transaction gui.
+*/
+void EditAccount::applyTransaction()
+{
+	this->current->value = (this->ui->transaction_value->value() * 100);
+	this->current->name = this->ui->transaction_name->text();
+	this->current->description = this->ui->transaction_description->toPlainText();
+	this->current->date = this->ui->transaction_date->date().toJulianDay();
+
+	//set the transaction to "not modified"
+	this->ui->transaction_name->setModified(false);
+
+	//some information updates for the user:
+	this->ui->balance->setText(QString::fromStdString(
+		std::to_string(
+		((long double)data::calculate_resulting_balances(this->account.transactions)[0] / (long double)100))));
+	std::sort(this->account.transactions.begin(), this->account.transactions.end(), least_to_greatest);
+	this->ui->transaction_list->clear();
+	for (unsigned int x{ 0 }; x < this->account.transactions.size(); ++x)
+	{
+		this->ui->transaction_list->addItem(transaction_display(this->account.transactions[x]));
+	}
+
+	//everything else's value is compared directly...
+	this->updateTransactionApplyButton();
+	this->clearmod();
+}
+
+void EditAccount::updateTransactionApplyButton()
+{
+	this->ui->apply_transaction_button->setEnabled(this->tmodified());
+}
+
+/**
 Enables the transaction modification group box and sets the values of
 the input widgets accordingly.  Also enabled the apply_transaction_button.
 */
@@ -155,36 +191,5 @@ bool EditAccount::tmodified()
 		((int_least32_t)(this->ui->transaction_value->value() * 100) != this->current->value)  ||
 		(this->ui->transaction_date->date() != QDate::fromJulianDay(this->current->date))  ||
 		(this->ui->transaction_description->toPlainText() != this->current->description));
-}
-
-void EditAccount::updateTransactionApplyButton()
-{
-	this->ui->apply_transaction_button->setEnabled(this->tmodified());
-}
-
-void EditAccount::applyTransaction()
-{
-	this->current->value = (this->ui->transaction_value->value() * 100);
-	this->current->name = this->ui->transaction_name->text();
-	this->current->description = this->ui->transaction_description->toPlainText();
-	this->current->date = this->ui->transaction_date->date().toJulianDay();
-	
-	//set the transaction to "not modified"
-	this->ui->transaction_name->setModified(false);
-
-	//some information updates for the user:
-	this->ui->balance->setText(QString::fromStdString(
-		std::to_string(
-		((long double)data::calculate_resulting_balances(this->account.transactions)[0] / (long double)100))));
-	std::sort(this->account.transactions.begin(), this->account.transactions.end(), least_to_greatest);
-	this->ui->transaction_list->clear();
-	for(unsigned int x{0}; x < this->account.transactions.size(); ++x)
-	{
-		this->ui->transaction_list->addItem(transaction_display(this->account.transactions[x]));
-	}
-
-	//everything else's value is compared directly...
-	this->updateTransactionApplyButton();
-	this->clearmod();
 }
 

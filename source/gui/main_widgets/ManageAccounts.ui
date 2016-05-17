@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1189</width>
-    <height>737</height>
+    <width>583</width>
+    <height>368</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -153,7 +153,7 @@
      <y>204</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1489</x>
+     <x>582</x>
      <y>280</y>
     </hint>
    </hints>
@@ -165,12 +165,12 @@
    <slot>editButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>734</x>
-     <y>683</y>
+     <x>409</x>
+     <y>347</y>
     </hint>
     <hint type="destinationlabel">
-     <x>961</x>
-     <y>818</y>
+     <x>582</x>
+     <y>367</y>
     </hint>
    </hints>
   </connection>
@@ -181,12 +181,12 @@
    <slot>newAccount()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>604</x>
-     <y>678</y>
+     <x>328</x>
+     <y>347</y>
     </hint>
     <hint type="destinationlabel">
-     <x>645</x>
-     <y>884</y>
+     <x>582</x>
+     <y>367</y>
     </hint>
    </hints>
   </connection>
@@ -197,12 +197,12 @@
    <slot>deleteAccount()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>454</x>
-     <y>677</y>
+     <x>247</x>
+     <y>347</y>
     </hint>
     <hint type="destinationlabel">
      <x>513</x>
-     <y>903</y>
+     <y>367</y>
     </hint>
    </hints>
   </connection>
@@ -213,12 +213,12 @@
    <slot>newTransaction()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>579</x>
-     <y>90</y>
+     <x>335</x>
+     <y>55</y>
     </hint>
     <hint type="destinationlabel">
-     <x>947</x>
-     <y>-97</y>
+     <x>582</x>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -229,12 +229,12 @@
    <slot>updateButtons()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>645</x>
-     <y>354</y>
+     <x>563</x>
+     <y>317</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1669</x>
-     <y>379</y>
+     <x>582</x>
+     <y>367</y>
     </hint>
    </hints>
   </connection>
