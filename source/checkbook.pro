@@ -24,6 +24,7 @@ TARGET = checkbook_program
 TEMPLATE = app
 
 SOURCES += main.cpp \
+			data/global.cpp \
             gui/MainWindow.cpp \
             gui/main_widgets/ManageAccounts.cpp \
             gui/information_dialogs/AccountInformation.cpp \
@@ -32,10 +33,11 @@ SOURCES += main.cpp \
             utility/stream_operations.cpp \
             utility/time_class.cpp \
             data/account.cpp \
-			data/global.cpp \
-			gui/data_input/NewTransaction.cpp
+			gui/data_input/NewTransaction.cpp \
+			utility/file_loader.cpp
 
-HEADERS  += gui/MainWindow.hpp \
+HEADERS  += data/global.hpp \
+			gui/MainWindow.hpp \
             gui/main_widgets/ManageAccounts.hpp \
             gui/information_dialogs/AccountInformation.hpp \
 			gui/data_input/EditAccount.hpp \
@@ -43,8 +45,8 @@ HEADERS  += gui/MainWindow.hpp \
             utility/stream_operations.hpp \
             utility/time_class.hpp \
             data/account.hpp \
-			data/global.hpp \
-			gui/data_input/NewTransaction.hpp
+			gui/data_input/NewTransaction.hpp \
+			utility/file_loader.hpp
 
 FORMS    += gui/MainWindow.ui \
             gui/main_widgets/ManageAccounts.ui \

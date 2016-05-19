@@ -14,6 +14,7 @@
 #include "data/global.hpp"
 #include "gui/main_widgets/ManageAccounts.hpp"
 #include "utility/time_class.hpp"
+#include "utility/file_loader.hpp"
 
 namespace
 {
@@ -51,6 +52,7 @@ EditAccount::EditAccount(const data::account_data& acc, QWidget *parent) :
 {
     this->ui->setupUi(this);
 	this->set_to(this->account);
+	global::main_window->setWindowTitle("Edit Account");
 }
 
 EditAccount::~EditAccount()
@@ -66,7 +68,7 @@ void EditAccount::closeMenu()
 void EditAccount::save()
 {
 	this->account.name = this->ui->account_name->text();
-	data::file::save(this->account);
+	utility::save<data::account_data>(this->account);
 }
 
 void EditAccount::set_to(data::account_data& account)

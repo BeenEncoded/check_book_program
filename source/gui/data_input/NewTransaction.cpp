@@ -5,6 +5,7 @@
 #include "ui_NewTransaction.h"
 #include "utility/time_class.hpp"
 #include "data/account.hpp"
+#include "utility/file_loader.hpp"
 
 NewTransaction::NewTransaction(const data::account_data& a, QWidget* parent) :
 	QDialog{parent},
@@ -27,7 +28,7 @@ void NewTransaction::accept()
 		this->ui->transaction_date->date().toJulianDay(),
 		this->ui->transaction_name->text(),
 		this->ui->transaction_description->toPlainText()});
-	data::file::save(this->account);
+	utility::save<data::account_data>(this->account);
 	QDialog::accept();
 }
 

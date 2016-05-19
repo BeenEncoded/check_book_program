@@ -4,6 +4,7 @@
 #include <string>
 #include <QDate>
 #include <QListWidgetItem>
+#include <algorithm>
 
 #include "AccountInformation.hpp"
 #include "ui_AccountInformation.h"
@@ -13,6 +14,7 @@ namespace
 {
 	QString transaction_display(const data::transaction_data&);
 	QString date_display(const QDate&);
+	bool trans_comp(const data::transaction_data&, const data::transaction_data&);
 
 
 	inline QString date_display(const QDate& date)
@@ -26,6 +28,11 @@ namespace
 	{
 		return (QString{"["} + date_display(QDate::fromJulianDay(t.date)) + QString{"]:  "} + 
 			t.name);
+	}
+
+	inline bool trans_comp(const data::transaction_data& t1, const data::transaction_data& t2)
+	{
+		return (t1.date > t2.date);
 	}
 
 
@@ -48,6 +55,8 @@ AccountInformation::~AccountInformation()
 void AccountInformation::set_account(const data::account_data& a)
 {
 	this->cleart();
+	this->ui->list->clear();
+	std::sort(this->account.transactions.begin(), this->account.transactions.end(), trans_comp);
 	for(unsigned int x{0}; x < this->account.transactions.size(); ++x)
 	{
 		this->ui->list->addItem(transaction_display(this->account.transactions[x]));

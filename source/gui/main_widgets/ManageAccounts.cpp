@@ -11,6 +11,7 @@
 #include "gui/data_input/EditAccount.hpp"
 #include "gui/data_input/NewTransaction.hpp"
 #include "gui/information_dialogs/AccountInformation.hpp"
+#include "utility/file_loader.hpp"
 
 ManageAccounts::ManageAccounts(QWidget *parent) : 
         QWidget{parent},
@@ -18,7 +19,7 @@ ManageAccounts::ManageAccounts(QWidget *parent) :
 {
     this->ui->setupUi(this);
 
-	this->basic_info = data::file::load_basic();
+	this->basic_info = utility::load_basic<data::account_data>();
 
 	this->ui->account_list->clear();
 	for(unsigned int x{0}; x < this->basic_info.size(); ++x)
@@ -26,6 +27,7 @@ ManageAccounts::ManageAccounts(QWidget *parent) :
 		this->ui->account_list->addItem(this->basic_info[x].name);
 	}
 	this->updateButtons();
+	global::main_window->setWindowTitle("Manage Accounts");
 }
 
 ManageAccounts::~ManageAccounts()
@@ -35,10 +37,8 @@ ManageAccounts::~ManageAccounts()
 
 void ManageAccounts::accountSelected(QListWidgetItem* item)
 {
-	using data::file::load_account;
-
 	AccountInformation dialog{global::main_window, 
-		load_account(this->basic_info[this->ui->account_list->row(item)].id)};
+		utility::load<data::account_data>(this->basic_info[this->ui->account_list->row(item)].id)};
 	dialog.setModal(true);
 	dialog.exec();
 }
@@ -48,7 +48,7 @@ void ManageAccounts::editButtonClicked()
 	if(!this->ui->account_list->selectedItems().empty())
 	{
 		global::main_window->setCentralWidget(new EditAccount(
-			data::file::load_account(this->basic_info[this->ui->account_list->currentRow()].id), global::main_window));
+			utility::load<data::account_data>(this->basic_info[this->ui->account_list->currentRow()].id), global::main_window));
 	}
 }
 
@@ -68,7 +68,7 @@ void ManageAccounts::deleteAccount()
 			this->basic_info[index].name.toStdWString() + L"\"??  This is permanent!"));
 		if(answer == QMessageBox::Yes)
 		{
-			data::file::remove(this->basic_info[index].id);
+			utility::remove<data::account_data>(this->basic_info[index].id);
 			this->basic_info.erase(this->basic_info.begin() + index);
 
 			this->ui->account_list->clear();
@@ -88,7 +88,7 @@ void ManageAccounts::newTransaction()
 		auto index = this->ui->account_list->currentRow();
 		if((index >= 0) && (index <  this->basic_info.size()))
 		{
-			data::account_data account{data::file::load_account(this->basic_info[index].id)};
+			data::account_data account{utility::load<data::account_data>(this->basic_info[index].id)};
 			NewTransaction d{account, this};
 			d.setModal(true);
 			d.exec();
