@@ -48,7 +48,7 @@ EditAccount::EditAccount(const data::account_data& acc, QWidget *parent) :
         QWidget{parent},
         ui{new Ui::EditAccount},
 		account{acc},
-		current{nullptr}
+		current{(std::size_t)-1}
 {
     this->ui->setupUi(this);
 	this->set_to(this->account);
@@ -119,7 +119,7 @@ you really want to discard the changes?");
 	}
 	if(!this->ui->transaction_list->selectedItems().empty())
 	{
-		this->settmod(this->account.transactions[this->ui->transaction_list->currentRow()]);
+		this->settmod(this->ui->transaction_list->currentRow());
 	}
 	else this->clearmod();
 }
@@ -131,10 +131,12 @@ pointer to null and clears the transaction gui.
 */
 void EditAccount::applyTransaction()
 {
-	this->current->value = (this->ui->transaction_value->value() * 100);
-	this->current->name = this->ui->transaction_name->text();
-	this->current->description = this->ui->transaction_description->toPlainText();
-	this->current->date = this->ui->transaction_date->date().toJulianDay();
+	data::transaction_data &cur{this->account.transactions[this->current]};
+
+	cur.value = (this->ui->transaction_value->value() * 100);
+	cur.name = this->ui->transaction_name->text();
+	cur.description = this->ui->transaction_description->toPlainText();
+	cur.date = this->ui->transaction_date->date().toJulianDay();
 
 	//set the transaction to "not modified"
 	this->ui->transaction_name->setModified(false);
@@ -164,21 +166,21 @@ void EditAccount::updateTransactionApplyButton()
 Enables the transaction modification group box and sets the values of
 the input widgets accordingly.  Also enabled the apply_transaction_button.
 */
-void EditAccount::settmod(data::transaction_data& transaction)
+void EditAccount::settmod(const std::size_t& x)
 {
-	this->current = &transaction;
+	this->current = x;
 
 	this->ui->transaction_box->setEnabled(true);
-	this->ui->transaction_name->setText(transaction.name);
-	this->ui->transaction_date->setDate(QDate::fromJulianDay(transaction.date));
-	this->ui->transaction_value->setValue((double)transaction.value / (double)100);
-	this->ui->transaction_description->setPlainText(transaction.description);
+	this->ui->transaction_name->setText(this->account.transactions[x].name);
+	this->ui->transaction_date->setDate(QDate::fromJulianDay(this->account.transactions[x].date));
+	this->ui->transaction_value->setValue((double)this->account.transactions[x].value / (double)100);
+	this->ui->transaction_description->setPlainText(this->account.transactions[x].description);
 	this->ui->apply_transaction_button->setEnabled(false);
 }
 
 void EditAccount::clearmod()
 {
-	this->current = nullptr;
+	this->current = -1;
 	this->ui->transaction_name->setText("");
 	this->ui->transaction_date->setDate(QDate::currentDate());
 	this->ui->transaction_value->setValue(0);
@@ -188,10 +190,33 @@ void EditAccount::clearmod()
 
 bool EditAccount::tmodified()
 {
-	if(!this->ui->transaction_box->isEnabled() || (this->current == nullptr)) return false;
+	if(!this->ui->transaction_box->isEnabled() || (this->current == -1)) return false;
 	return (this->ui->transaction_name->isModified() || 
-		((int_least32_t)(this->ui->transaction_value->value() * 100) != this->current->value)  ||
-		(this->ui->transaction_date->date() != QDate::fromJulianDay(this->current->date))  ||
-		(this->ui->transaction_description->toPlainText() != this->current->description));
+		((int_least32_t)(this->ui->transaction_value->value() * 100) != this->account.transactions[this->current].value)  ||
+		(this->ui->transaction_date->date() != QDate::fromJulianDay(this->account.transactions[this->current].date))  ||
+		(this->ui->transaction_description->toPlainText() != this->account.transactions[this->current].description));
+}
+
+void EditAccount::deleteTransaction()
+{
+	auto answer = QMessageBox::question(this, "Are you sure?", 
+		(QString{"Arer you sure you want to delete \""} + 
+			this->account.transactions[this->current].name + QString{"\"?"}));
+	if(answer == QMessageBox::No) return;
+
+	this->account.transactions.erase(this->account.transactions.begin() + this->current);
+	this->ui->transaction_list->clear();
+	for(unsigned int y{0}; y < this->account.transactions.size(); ++y)
+	{
+		this->ui->transaction_list->addItem(transaction_display(this->account.transactions[y]));
+	}
+	this->clearmod();
+		
+	int_least32_t total{0};
+	for(auto it = this->account.transactions.begin(); it != this->account.transactions.end(); ++it)
+	{
+		total += it->value;
+	}
+	this->ui->balance->setText(QString::fromStdString(std::to_string(((long double)total / 100))));
 }
 

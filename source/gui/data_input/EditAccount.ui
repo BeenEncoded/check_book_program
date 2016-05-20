@@ -252,14 +252,51 @@
          <widget class="QPlainTextEdit" name="transaction_description"/>
         </item>
         <item>
-         <widget class="QPushButton" name="apply_transaction_button">
-          <property name="toolTip">
-           <string>Apply the changes you made to the transaction</string>
-          </property>
-          <property name="text">
-           <string>Apply Changes</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <item>
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="apply_transaction_button">
+            <property name="toolTip">
+             <string>Apply the changes you made to the transaction</string>
+            </property>
+            <property name="text">
+             <string>Apply Changes</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="text">
+             <string>Delete</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -290,8 +327,8 @@
    <slot>cancelClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>373</x>
-     <y>803</y>
+     <x>225</x>
+     <y>332</y>
     </hint>
     <hint type="destinationlabel">
      <x>253</x>
@@ -306,8 +343,8 @@
    <slot>doneClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>90</x>
-     <y>780</y>
+     <x>144</x>
+     <y>332</y>
     </hint>
     <hint type="destinationlabel">
      <x>95</x>
@@ -338,8 +375,8 @@
    <slot>updateTransactionApplyButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>695</x>
-     <y>168</y>
+     <x>532</x>
+     <y>109</y>
     </hint>
     <hint type="destinationlabel">
      <x>1419</x>
@@ -354,8 +391,8 @@
    <slot>updateTransactionApplyButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>814</x>
-     <y>217</y>
+     <x>542</x>
+     <y>137</y>
     </hint>
     <hint type="destinationlabel">
      <x>1451</x>
@@ -370,8 +407,8 @@
    <slot>updateTransactionApplyButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1017</x>
-     <y>413</y>
+     <x>666</x>
+     <y>294</y>
     </hint>
     <hint type="destinationlabel">
      <x>1603</x>
@@ -386,8 +423,8 @@
    <slot>updateTransactionApplyButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1212</x>
-     <y>164</y>
+     <x>665</x>
+     <y>109</y>
     </hint>
     <hint type="destinationlabel">
      <x>1885</x>
@@ -402,12 +439,28 @@
    <slot>applyTransaction()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>902</x>
-     <y>467</y>
+     <x>484</x>
+     <y>324</y>
     </hint>
     <hint type="destinationlabel">
      <x>1029</x>
      <y>958</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>EditAccount</receiver>
+   <slot>deleteTransaction()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>522</x>
+     <y>312</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>524</x>
+     <y>551</y>
     </hint>
    </hints>
   </connection>
@@ -419,5 +472,6 @@
   <slot>updateTransactionModification()</slot>
   <slot>updateTransactionApplyButton()</slot>
   <slot>applyTransaction()</slot>
+  <slot>deleteTransaction()</slot>
  </slots>
 </ui>

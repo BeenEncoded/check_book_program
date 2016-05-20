@@ -1,6 +1,7 @@
 #ifndef DATA_INPUT_EDITACCOUNT_HPP_INCLUDED
 #define DATA_INPUT_EDITACCOUNT_HPP_INCLUDED
 #include <QWidget>
+#include <vector>
 
 #include "data/account.hpp"
 
@@ -26,15 +27,16 @@ public slots:
 	void updateTransactionModification();
 	void updateTransactionApplyButton();
 	void applyTransaction();
+	void deleteTransaction();
     
 private:
     Ui::EditAccount *ui;
 	data::account_data account;
-	data::transaction_data* current;
+	std::size_t current;
 
 	void set_to(data::account_data&);
 	void save();
-	void settmod(data::transaction_data&);
+	void settmod(const std::size_t&);
 	void clearmod();
 	bool tmodified();
 
