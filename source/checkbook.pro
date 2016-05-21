@@ -34,7 +34,8 @@ SOURCES += main.cpp \
             utility/time_class.cpp \
             data/account.cpp \
 			gui/data_input/NewTransaction.cpp \
-			utility/file_loader.cpp
+			utility/file_loader.cpp \
+			gui/data_input/MoneyTransfer.cpp
 
 HEADERS  += data/global.hpp \
 			gui/MainWindow.hpp \
@@ -46,13 +47,15 @@ HEADERS  += data/global.hpp \
             utility/time_class.hpp \
             data/account.hpp \
 			gui/data_input/NewTransaction.hpp \
-			utility/file_loader.hpp
+			utility/file_loader.hpp \
+			gui/data_input/MoneyTransfer.hpp
 
 FORMS    += gui/MainWindow.ui \
             gui/main_widgets/ManageAccounts.ui \
             gui/information_dialogs/AccountInformation.ui \
 			gui/data_input/EditAccount.ui \
-			gui/data_input/NewTransaction.ui
+			gui/data_input/NewTransaction.ui \
+			gui/data_input/MoneyTransfer.ui
 
 #RESOURCES += 
 

@@ -192,7 +192,7 @@ bool EditAccount::tmodified()
 {
 	if(!this->ui->transaction_box->isEnabled() || (this->current == -1)) return false;
 	return (this->ui->transaction_name->isModified() || 
-		((int_least32_t)(this->ui->transaction_value->value() * 100) != this->account.transactions[this->current].value)  ||
+		((data::value_t)(this->ui->transaction_value->value() * 100) != this->account.transactions[this->current].value)  ||
 		(this->ui->transaction_date->date() != QDate::fromJulianDay(this->account.transactions[this->current].date))  ||
 		(this->ui->transaction_description->toPlainText() != this->account.transactions[this->current].description));
 }
@@ -212,7 +212,7 @@ void EditAccount::deleteTransaction()
 	}
 	this->clearmod();
 		
-	int_least32_t total{0};
+	data::value_t total{0};
 	for(auto it = this->account.transactions.begin(); it != this->account.transactions.end(); ++it)
 	{
 		total += it->value;

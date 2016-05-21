@@ -14,10 +14,12 @@
 
 namespace data
 {
+	using value_t = int_least64_t;
+
     struct account_data;
     struct transaction_data;
     
-	std::vector<int_least32_t> calculate_resulting_balances(const std::vector<transaction_data>&);
+	std::vector<value_t> calculate_resulting_balances(const std::vector<transaction_data>&);
 
     std::ostream& operator<<(std::ostream&, const account_data&);
     std::istream& operator>>(std::istream&, account_data&);
@@ -27,7 +29,7 @@ namespace data
     
     struct transaction_data
     {
-        int_least32_t value; //the monetary value of this transaction multiplied by 100.
+        value_t value; //the monetary value of this transaction multiplied by 100.
         qint64 date;
         QString name, description;
     };

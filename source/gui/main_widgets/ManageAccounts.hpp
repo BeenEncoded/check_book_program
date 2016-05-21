@@ -26,6 +26,7 @@ public slots:
 	void deleteAccount();
 	void newTransaction();
 	void updateButtons();
+	void transfer();
     
 private:
     Ui::ManageAccounts *ui;

@@ -177,9 +177,9 @@ namespace data
 	 Calculates the resulting balance each transaction results in after application to the account.
 	 The index of each result corresponds to its index in the list of transactions passed as the argument.
 	*/
-	std::vector<int_least32_t> calculate_resulting_balances(const std::vector<transaction_data>& transactions)
+	std::vector<value_t> calculate_resulting_balances(const std::vector<transaction_data>& transactions)
 	{
-		std::vector<int_least32_t> results;
+		std::vector<value_t> results;
 		
 		for(std::size_t x{(transactions.size() - 1)}; true; --x)
 		{

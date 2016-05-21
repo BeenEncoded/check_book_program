@@ -36,6 +36,13 @@
          </spacer>
         </item>
         <item>
+         <widget class="QPushButton" name="transfer_button">
+          <property name="text">
+           <string>Transfer Money</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="new_transaction_button">
           <property name="toolTip">
            <string>Make a transaction for the selected account</string>
@@ -165,8 +172,8 @@
    <slot>editButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>409</x>
-     <y>347</y>
+     <x>527</x>
+     <y>329</y>
     </hint>
     <hint type="destinationlabel">
      <x>582</x>
@@ -181,8 +188,8 @@
    <slot>newAccount()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>328</x>
-     <y>347</y>
+     <x>365</x>
+     <y>329</y>
     </hint>
     <hint type="destinationlabel">
      <x>582</x>
@@ -197,8 +204,8 @@
    <slot>deleteAccount()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>247</x>
-     <y>347</y>
+     <x>203</x>
+     <y>329</y>
     </hint>
     <hint type="destinationlabel">
      <x>513</x>
@@ -213,8 +220,8 @@
    <slot>newTransaction()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>335</x>
-     <y>55</y>
+     <x>461</x>
+     <y>108</y>
     </hint>
     <hint type="destinationlabel">
      <x>582</x>
@@ -229,12 +236,28 @@
    <slot>updateButtons()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>563</x>
-     <y>317</y>
+     <x>545</x>
+     <y>270</y>
     </hint>
     <hint type="destinationlabel">
      <x>582</x>
      <y>367</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>transfer_button</sender>
+   <signal>clicked()</signal>
+   <receiver>ManageAccounts</receiver>
+   <slot>transfer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>149</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>258</x>
+     <y>769</y>
     </hint>
    </hints>
   </connection>
@@ -246,5 +269,6 @@
   <slot>deleteAccount()</slot>
   <slot>newTransaction()</slot>
   <slot>updateButtons()</slot>
+  <slot>transfer()</slot>
  </slots>
 </ui>

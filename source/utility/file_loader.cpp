@@ -80,7 +80,7 @@ namespace utility
 		if(t.id == 0)
 		{
 			auto id{ids<type>(folder)};
-			while(id.find(++t.id) == id.end());
+			while(id.find(++t.id) != id.end());
 		}
 		
 		//now we find its file or create it if it doesn't exist:

@@ -62,7 +62,7 @@ void AccountInformation::set_account(const data::account_data& a)
 		this->ui->list->addItem(transaction_display(this->account.transactions[x]));
 	}
 	this->ui->account_name->setText(a.name);
-	int_least32_t total{0};
+	data::value_t total{0};
 	for(std::vector<data::transaction_data>::const_iterator it{this->account.transactions.begin()}; it != this->account.transactions.end(); ++it)
 	{
 		total += it->value;

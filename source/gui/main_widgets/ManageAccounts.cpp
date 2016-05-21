@@ -3,6 +3,8 @@
 #include <QString>
 #include <QListWidgetItem>
 #include <QMessageBox>
+#include <limits>
+#include <type_traits>
 
 #include "ManageAccounts.hpp"
 #include "data/account.hpp"
@@ -12,6 +14,7 @@
 #include "gui/data_input/NewTransaction.hpp"
 #include "gui/information_dialogs/AccountInformation.hpp"
 #include "utility/file_loader.hpp"
+#include "gui/data_input/MoneyTransfer.hpp"
 
 ManageAccounts::ManageAccounts(QWidget *parent) : 
         QWidget{parent},
@@ -103,5 +106,13 @@ void ManageAccounts::updateButtons()
 	this->ui->new_transaction_button->setEnabled(enable);
 	this->ui->delete_button->setEnabled(enable);
 	this->ui->edit_button->setEnabled(enable);
+	this->ui->transfer_button->setEnabled(this->basic_info.size() > 1);
+}
+
+void ManageAccounts::transfer()
+{
+	MoneyTransfer t{this, this->basic_info};
+	t.setModal(true);
+	t.exec();
 }
 
