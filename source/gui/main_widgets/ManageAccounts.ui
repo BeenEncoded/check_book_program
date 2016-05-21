@@ -6,26 +6,269 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>569</width>
-    <height>335</height>
+    <width>583</width>
+    <height>368</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Manage Accounts</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>HELLO WORLD!</string>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Accounts:</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="transfer_button">
+          <property name="text">
+           <string>Transfer Money</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="new_transaction_button">
+          <property name="toolTip">
+           <string>Make a transaction for the selected account</string>
+          </property>
+          <property name="text">
+           <string>New Transaction</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QListWidget" name="account_list">
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="delete_button">
+          <property name="toolTip">
+           <string>Delete the selected account,  be careful!  It's permanent!</string>
+          </property>
+          <property name="text">
+           <string>Delete</string>
+          </property>
+          <property name="shortcut">
+           <string>Del</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="new_button">
+          <property name="toolTip">
+           <string>Create a new bank account!</string>
+          </property>
+          <property name="text">
+           <string>New Account</string>
+          </property>
+          <property name="shortcut">
+           <string>Ctrl+N</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="edit_button">
+          <property name="toolTip">
+           <string>Edit the selected account</string>
+          </property>
+          <property name="text">
+           <string>Edit</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>account_list</sender>
+   <signal>itemActivated(QListWidgetItem*)</signal>
+   <receiver>ManageAccounts</receiver>
+   <slot>accountSelected(QListWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>492</x>
+     <y>204</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>582</x>
+     <y>280</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>edit_button</sender>
+   <signal>clicked()</signal>
+   <receiver>ManageAccounts</receiver>
+   <slot>editButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>527</x>
+     <y>329</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>582</x>
+     <y>367</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>new_button</sender>
+   <signal>clicked()</signal>
+   <receiver>ManageAccounts</receiver>
+   <slot>newAccount()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>365</x>
+     <y>329</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>582</x>
+     <y>367</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>delete_button</sender>
+   <signal>clicked()</signal>
+   <receiver>ManageAccounts</receiver>
+   <slot>deleteAccount()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>203</x>
+     <y>329</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>513</x>
+     <y>367</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>new_transaction_button</sender>
+   <signal>clicked()</signal>
+   <receiver>ManageAccounts</receiver>
+   <slot>newTransaction()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>461</x>
+     <y>108</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>582</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>account_list</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>ManageAccounts</receiver>
+   <slot>updateButtons()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>545</x>
+     <y>270</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>582</x>
+     <y>367</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>transfer_button</sender>
+   <signal>clicked()</signal>
+   <receiver>ManageAccounts</receiver>
+   <slot>transfer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>149</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>258</x>
+     <y>769</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>accountSelected(QListWidgetItem*)</slot>
+  <slot>editButtonClicked()</slot>
+  <slot>newAccount()</slot>
+  <slot>deleteAccount()</slot>
+  <slot>newTransaction()</slot>
+  <slot>updateButtons()</slot>
+  <slot>transfer()</slot>
+ </slots>
 </ui>

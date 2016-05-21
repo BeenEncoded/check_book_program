@@ -1,2 +1,8 @@
 build
 checkbook_program
+*.sln
+*.db
+*.vcxproj
+*.filters
+*.user
+*.opendb
