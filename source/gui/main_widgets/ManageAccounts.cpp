@@ -16,6 +16,49 @@
 #include "utility/file_loader.hpp"
 #include "gui/data_input/MoneyTransfer.hpp"
 
+
+namespace
+{
+	QString account_display(const data::account_data&);
+	std::string fpoint_acc(const std::string&, const unsigned int&);
+
+
+
+	inline QString account_display(const data::account_data& a)
+	{
+		using utility::load;
+
+		data::account_data account{load<data::account_data>(a.id)};
+		data::value_t total{0};
+		
+		for(std::vector<data::transaction_data>::const_iterator it{account.transactions.begin()}; it != account.transactions.end(); ++it)
+		{
+			total += it->value;
+		}
+		return (QString::fromStdString(fpoint_acc(std::to_string((long double)total / (long double)100), 2)) + 
+			QString{":  "} + account.name);
+	}
+
+	inline std::string fpoint_acc(const std::string& s, const unsigned int& accuracy)
+	{
+		std::string temps{s};
+		if(temps.find('.') == std::string::npos)
+		{
+			if(temps.empty()) temps += "0";
+			temps += ("." + std::string{(char)accuracy, '0'});
+		}
+		else if(!temps.empty())
+		{
+			auto pos = temps.find('.');
+			if((temps.size() - 1) < (pos + accuracy)) temps += std::string{(char)((pos + accuracy) - (temps.size() - 1)), '0'};
+			if((temps.size() - 1) > (pos + accuracy)) temps.erase((temps.begin() + (pos + accuracy + 1)), temps.end());
+		}
+		return temps;
+	}
+
+
+}
+
 ManageAccounts::ManageAccounts(QWidget *parent) : 
         QWidget{parent},
         ui{new Ui::ManageAccounts}
@@ -27,7 +70,7 @@ ManageAccounts::ManageAccounts(QWidget *parent) :
 	this->ui->account_list->clear();
 	for(unsigned int x{0}; x < this->basic_info.size(); ++x)
 	{
-		this->ui->account_list->addItem(this->basic_info[x].name);
+		this->ui->account_list->addItem(account_display(this->basic_info[x]));
 	}
 	this->updateButtons();
 	global::main_window->setWindowTitle("Manage Accounts");
@@ -95,6 +138,12 @@ void ManageAccounts::newTransaction()
 			NewTransaction d{account, this};
 			d.setModal(true);
 			d.exec();
+			this->ui->account_list->clear();
+			this->basic_info = utility::load_basic<data::account_data>();
+			for(std::size_t x{0}; x < this->basic_info.size(); ++x)
+			{
+				this->ui->account_list->addItem(account_display(this->basic_info[x]));
+			}
 		}
 	}
 }

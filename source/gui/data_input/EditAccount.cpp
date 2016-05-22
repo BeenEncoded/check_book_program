@@ -21,6 +21,7 @@ namespace
 	QString date_display(const QDate&);
 	bool least_to_greatest(const data::transaction_data&, const data::transaction_data&);
 	QString transaction_display(const data::transaction_data&);
+	std::string fpoint_acc(const std::string&, const unsigned int&);
 
 
 
@@ -39,6 +40,23 @@ namespace
 	{
 		return (date_display(QDate::fromJulianDay(transaction.date)) +
 			QString{ ":  " } + transaction.name);
+	}
+
+	inline std::string fpoint_acc(const std::string& s, const unsigned int& accuracy)
+	{
+		std::string temps{ s };
+		if (temps.find('.') == std::string::npos)
+		{
+			if (temps.empty()) temps += "0";
+			temps += ("." + std::string{ (char)accuracy, '0' });
+		}
+		else if (!temps.empty())
+		{
+			auto pos = temps.find('.');
+			if ((temps.size() - 1) < (pos + accuracy)) temps += std::string{ (char)((pos + accuracy) - (temps.size() - 1)), '0' };
+			if ((temps.size() - 1) > (pos + accuracy)) temps.erase((temps.begin() + (pos + accuracy + 1)), temps.end());
+		}
+		return temps;
 	}
 
 
@@ -77,7 +95,8 @@ void EditAccount::set_to(data::account_data& account)
 	this->ui->account_name->setText(account.name);
 	if(!this->account.transactions.empty())
 	{
-		this->ui->balance->setText(QString::fromStdString(std::to_string((long double)data::calculate_resulting_balances(this->account.transactions)[0] / (long double)100)));
+		this->ui->balance->setText(QString::fromStdString(
+			fpoint_acc(std::to_string((long double)data::calculate_resulting_balances(this->account.transactions)[0] / (long double)100), 2)));
 	}
 	std::sort(this->account.transactions.begin(), this->account.transactions.end(), least_to_greatest);
 	this->ui->transaction_list->clear();
