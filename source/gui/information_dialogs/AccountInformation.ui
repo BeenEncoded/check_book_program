@@ -255,17 +255,33 @@
   </connection>
   <connection>
    <sender>list</sender>
+   <signal>currentItemChanged(QListWidgetItem*,QListWidgetItem*)</signal>
+   <receiver>AccountInformation</receiver>
+   <slot>updateTransactionInformation(QListWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>210</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>110</x>
+     <y>565</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>list</sender>
    <signal>itemClicked(QListWidgetItem*)</signal>
    <receiver>AccountInformation</receiver>
    <slot>updateTransactionInformation(QListWidgetItem*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>150</x>
-     <y>232</y>
+     <x>170</x>
+     <y>246</y>
     </hint>
     <hint type="destinationlabel">
-     <x>218</x>
-     <y>565</y>
+     <x>186</x>
+     <y>599</y>
     </hint>
    </hints>
   </connection>

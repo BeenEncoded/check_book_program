@@ -108,7 +108,7 @@ void AccountInformation::set_transaction(const data::transaction_data& transacti
 	this->ui->transaction_information_box->setEnabled(true);
 	this->ui->transaction_name->setText(transaction.name);
 	this->ui->transaction_date->setText(date_display(QDate::fromJulianDay(transaction.date)));
-	this->ui->transaction_amount->setText(QString::fromStdString(std::to_string(((long double)transaction.value / (long double)100))));
+	this->ui->transaction_amount->setText(QString::fromStdString(fpoint_acc(std::to_string(((long double)transaction.value / (long double)100)), 2)));
 	this->ui->transaction_description->setPlainText(transaction.description);
 }
 

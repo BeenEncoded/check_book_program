@@ -464,6 +464,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>transaction_list</sender>
+   <signal>currentItemChanged(QListWidgetItem*,QListWidgetItem*)</signal>
+   <receiver>EditAccount</receiver>
+   <slot>updateTransactionModification()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>42</x>
+     <y>222</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>105</x>
+     <y>683</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>closeMenu()</slot>

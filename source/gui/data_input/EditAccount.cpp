@@ -7,6 +7,7 @@
 #include <QDate>
 #include <algorithm>
 #include <iostream>
+#include <sstream>
 
 #include "EditAccount.hpp"
 #include "ui_EditAccount.h"
@@ -22,6 +23,7 @@ namespace
 	bool least_to_greatest(const data::transaction_data&, const data::transaction_data&);
 	QString transaction_display(const data::transaction_data&);
 	std::string fpoint_acc(const std::string&, const unsigned int&);
+	data::value_t extract_value(const double&);
 
 
 
@@ -57,6 +59,22 @@ namespace
 			if ((temps.size() - 1) > (pos + accuracy)) temps.erase((temps.begin() + (pos + accuracy + 1)), temps.end());
 		}
 		return temps;
+	}
+
+	/*
+	Reads a value from a double.  This safely extracts
+	the double while preserving the floating point values, which can
+	cause errors if not read correctly.
+	*/
+	inline data::value_t extract_value(const double& d)
+	{
+		std::string temps{fpoint_acc(std::to_string(d), 2)};
+		if(temps.find('.') != std::string::npos) temps.erase(temps.find('.'), 1);
+		std::stringstream ss;
+		ss<< temps;
+		data::value_t value;
+		ss>> value;
+		return value;
 	}
 
 
@@ -152,7 +170,7 @@ void EditAccount::applyTransaction()
 {
 	data::transaction_data &cur{this->account.transactions[this->current]};
 
-	cur.value = (this->ui->transaction_value->value() * 100);
+	cur.value = extract_value(this->ui->transaction_value->value());
 	cur.name = this->ui->transaction_name->text();
 	cur.description = this->ui->transaction_description->toPlainText();
 	cur.date = this->ui->transaction_date->date().toJulianDay();
@@ -162,8 +180,10 @@ void EditAccount::applyTransaction()
 
 	//some information updates for the user:
 	this->ui->balance->setText(QString::fromStdString(
+		fpoint_acc(
 		std::to_string(
-		((long double)data::calculate_resulting_balances(this->account.transactions)[0] / (long double)100))));
+		((long double)data::calculate_resulting_balances(this->account.transactions)[0] / (long double)100)),
+			2)));
 	std::sort(this->account.transactions.begin(), this->account.transactions.end(), least_to_greatest);
 	this->ui->transaction_list->clear();
 	for (unsigned int x{ 0 }; x < this->account.transactions.size(); ++x)
@@ -211,7 +231,7 @@ bool EditAccount::tmodified()
 {
 	if(!this->ui->transaction_box->isEnabled() || (this->current == -1)) return false;
 	return (this->ui->transaction_name->isModified() || 
-		((data::value_t)(this->ui->transaction_value->value() * 100) != this->account.transactions[this->current].value)  ||
+		(extract_value(this->ui->transaction_value->value()) != this->account.transactions[this->current].value)  ||
 		(this->ui->transaction_date->date() != QDate::fromJulianDay(this->account.transactions[this->current].date))  ||
 		(this->ui->transaction_description->toPlainText() != this->account.transactions[this->current].description));
 }
@@ -224,18 +244,18 @@ void EditAccount::deleteTransaction()
 	if(answer == QMessageBox::No) return;
 
 	this->account.transactions.erase(this->account.transactions.begin() + this->current);
+	this->clearmod();
 	this->ui->transaction_list->clear();
 	for(unsigned int y{0}; y < this->account.transactions.size(); ++y)
 	{
 		this->ui->transaction_list->addItem(transaction_display(this->account.transactions[y]));
 	}
-	this->clearmod();
-		
+
 	data::value_t total{0};
 	for(auto it = this->account.transactions.begin(); it != this->account.transactions.end(); ++it)
 	{
 		total += it->value;
 	}
-	this->ui->balance->setText(QString::fromStdString(std::to_string(((long double)total / 100))));
+	this->ui->balance->setText(QString::fromStdString(fpoint_acc(std::to_string(((long double)total / 100)), 2)));
 }
 
