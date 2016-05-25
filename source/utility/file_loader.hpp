@@ -7,8 +7,9 @@ explicit template instantiation for use.
 
 	struct type_t
 	{
-		static const boost::filesystem::path FOLDER{"/path/to/folder/containing/objects"};
 		static constexpr const char* const EXTENSION{".dat"};
+
+		static boost::filesystem::path& folder() const;
 
 		static utility::ID_T load_id(std::istream&);
 		static type          basic(std::istream&);
@@ -32,7 +33,7 @@ Storage model:
 
 Explanation of member variables/functions:
 
-	-  static const boost::filesystem::path FOLDER{"/path/to/folder/containing/objects"};
+	-  static boost::filesystem::path folder() const;
 			This will be the folder under which all object files of that type will be stored.
 			Essentially, you must specify the folder you want to store this object in, 
 			and it's better kept as a constant global, because it shouldn't change.  Const-ness isn't
@@ -75,12 +76,12 @@ namespace utility
 {
 	using ID_T = int_least16_t;
 	
-	template<typename type> void              save(type&, const boost::filesystem::path& = type::FOLDER);
-	template<typename type> std::set<ID_T>    ids(const boost::filesystem::path& = type::FOLDER);
-	template<typename type> std::vector<type> load_all(const boost::filesystem::path& = type::FOLDER);
-	template<typename type> std::vector<type> load_basic(const boost::filesystem::path& = type::FOLDER);
-	template<typename type> type              load(const ID_T&, const boost::filesystem::path& = type::FOLDER);
-	template<typename type> void              remove(const ID_T&, const boost::filesystem::path& = type::FOLDER);
+	template<typename type> void              save(type&, const boost::filesystem::path& = type::folder());
+	template<typename type> std::set<ID_T>    ids(const boost::filesystem::path& = type::folder());
+	template<typename type> std::vector<type> load_all(const boost::filesystem::path& = type::folder());
+	template<typename type> std::vector<type> load_basic(const boost::filesystem::path& = type::folder());
+	template<typename type> type              load(const ID_T&, const boost::filesystem::path& = type::folder());
+	template<typename type> void              remove(const ID_T&, const boost::filesystem::path& = type::folder());
 
 }
 

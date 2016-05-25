@@ -40,7 +40,12 @@ namespace data
         utility::ID_T id;
         std::vector<transaction_data> transactions; //A list of transactions beginning with the most recent (index 0) and ending with the oldest
 
-		static boost::filesystem::path FOLDER;
+		static boost::filesystem::path& folder()
+		{
+			static boost::filesystem::path f{(global::root / boost::filesystem::path{ "Accounts" })};
+			return f;
+		}
+
 		static constexpr const char* const EXTENSION{".account"};
 
 		static utility::ID_T load_id(std::istream&);
