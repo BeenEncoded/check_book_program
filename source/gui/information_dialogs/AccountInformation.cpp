@@ -3,8 +3,10 @@
 #include <QString>
 #include <string>
 #include <QDate>
-#include <QListWidgetItem>
+#include <QTreeWidgetItem>
 #include <algorithm>
+#include <exception>
+#include <stdexcept>
 
 #include "AccountInformation.hpp"
 #include "ui_AccountInformation.h"
@@ -59,10 +61,12 @@ namespace
 AccountInformation::AccountInformation(QWidget* parent, const data::account_data& a) : 
         QDialog{parent},
         ui{new Ui::AccountInformation},
-		account{a}
+		account{a},
+		items{}
 {
     this->ui->setupUi(this);
 	this->set_account(this->account);
+	this->ui->list->setHeaderLabels({ "Date", "Name", "Value", "Balance" });
 }
 
 AccountInformation::~AccountInformation()
@@ -73,12 +77,7 @@ AccountInformation::~AccountInformation()
 void AccountInformation::set_account(const data::account_data& a)
 {
 	this->cleart();
-	this->ui->list->clear();
-	std::sort(this->account.transactions.begin(), this->account.transactions.end(), trans_comp);
-	for(unsigned int x{0}; x < this->account.transactions.size(); ++x)
-	{
-		this->ui->list->addItem(transaction_display(this->account.transactions[x]));
-	}
+	this->update_list();
 	this->ui->account_name->setText(a.name);
 	data::value_t total{0};
 	for(std::vector<data::transaction_data>::const_iterator it{this->account.transactions.begin()}; it != this->account.transactions.end(); ++it)
@@ -112,11 +111,37 @@ void AccountInformation::set_transaction(const data::transaction_data& transacti
 	this->ui->transaction_description->setPlainText(transaction.description);
 }
 
-void AccountInformation::updateTransactionInformation(QListWidgetItem* i)
+void AccountInformation::update_list()
+{
+	std::sort(this->account.transactions.begin(), this->account.transactions.end(), trans_comp);
+	this->ui->list->clear();
+	this->items.erase(this->items.begin(), this->items.end());
+	for(std::size_t x{0}; x < this->account.transactions.size(); ++x)
+	{
+		QTreeWidgetItem *item{new QTreeWidgetItem{{
+				date_display(QDate::fromJulianDay(this->account.transactions[x].date)),
+				this->account.transactions[x].name,
+				QString::fromStdString(fpoint_acc(std::to_string((long double)this->account.transactions[x].value / 100), 2)),
+				QString::fromStdString(fpoint_acc(std::to_string((long double)data::calculate_resulting_balances(this->account.transactions)[x] / 100), 2))}}};
+		this->ui->list->addTopLevelItem(item);
+		this->items.push_back(item);
+	}
+}
+
+std::size_t AccountInformation::index(QTreeWidgetItem* item)
+{
+	for(std::size_t x{0}; x < this->items.size(); ++x)
+	{
+		if(this->items[x] == item) return x;
+	}
+	throw std::runtime_error{"Error: invalid item!"};
+}
+
+void AccountInformation::updateTransactionInformation(QTreeWidgetItem* item)
 {
 	if(!this->ui->list->selectedItems().empty())
 	{
-		this->set_transaction(this->account.transactions[this->ui->list->row(i)]);
+		this->set_transaction(this->account.transactions[this->index(item)]);
 	}
 	else this->cleart();
 }
