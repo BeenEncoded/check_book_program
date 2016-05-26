@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>577</width>
-    <height>352</height>
+    <width>986</width>
+    <height>313</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,13 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QListWidget" name="list"/>
+      <widget class="QTreeWidget" name="list">
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
@@ -244,8 +250,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>142</x>
-     <y>326</y>
+     <x>286</x>
+     <y>301</y>
     </hint>
     <hint type="destinationlabel">
      <x>232</x>
@@ -255,22 +261,38 @@
   </connection>
   <connection>
    <sender>list</sender>
-   <signal>itemClicked(QListWidgetItem*)</signal>
+   <signal>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</signal>
    <receiver>AccountInformation</receiver>
-   <slot>updateTransactionInformation(QListWidgetItem*)</slot>
+   <slot>updateTransactionInformation(QTreeWidgetItem*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>150</x>
-     <y>232</y>
+     <x>154</x>
+     <y>160</y>
     </hint>
     <hint type="destinationlabel">
-     <x>218</x>
-     <y>565</y>
+     <x>211</x>
+     <y>542</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>list</sender>
+   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>AccountInformation</receiver>
+   <slot>updateTransactionInformation(QTreeWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>216</x>
+     <y>182</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>230</x>
+     <y>588</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>updateTransactionInformation(QListWidgetItem*)</slot>
+  <slot>updateTransactionInformation(QTreeWidgetItem*)</slot>
  </slots>
 </ui>

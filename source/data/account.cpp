@@ -165,8 +165,6 @@ namespace data
 		return account;
 	}
 
-	boost::filesystem::path account_data::FOLDER{(global::root / boost::filesystem::path{"Accounts"})};
-
 
 }
 
