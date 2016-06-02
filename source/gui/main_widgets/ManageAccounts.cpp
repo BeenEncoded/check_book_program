@@ -172,7 +172,6 @@ void ManageAccounts::exportToDatabase()
 {
 	using account_interface::store_account;
 
-
 	boost::filesystem::path p{QFileDialog::getSaveFileName(global::main_window, "Choose the database name: ", 
 		QString::fromStdString(global::root.string()), "SQLite Databases (*.db)").toStdWString()};
 	
