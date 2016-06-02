@@ -27,6 +27,7 @@ public slots:
 	void newTransaction();
 	void updateButtons();
 	void transfer();
+	void exportToDatabase();
     
 private:
     Ui::ManageAccounts *ui;

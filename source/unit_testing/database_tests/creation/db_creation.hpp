@@ -1,0 +1,11 @@
+#ifdef UNIT_TEST_PROG
+#ifndef UNIT_TESTING_DATABASE_TESTS_CREATION_DB_CREATION_HPP_INCLUDED
+#define UNIT_TESTING_DATABASE_TESTS_CREATION_DB_CREATION_HPP_INCLUDED
+
+namespace testing
+{
+	void create_db();
+}
+
+#endif
+#endif

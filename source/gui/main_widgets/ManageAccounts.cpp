@@ -5,6 +5,8 @@
 #include <QMessageBox>
 #include <limits>
 #include <type_traits>
+#include <QFileDialog>
+#include <boost/filesystem.hpp>
 
 #include "ManageAccounts.hpp"
 #include "data/account.hpp"
@@ -15,6 +17,7 @@
 #include "gui/information_dialogs/AccountInformation.hpp"
 #include "utility/file_loader.hpp"
 #include "gui/data_input/MoneyTransfer.hpp"
+#include "interface/mysql_account_interface.hpp"
 
 
 namespace
@@ -163,5 +166,22 @@ void ManageAccounts::transfer()
 	MoneyTransfer t{this, this->basic_info};
 	t.setModal(true);
 	t.exec();
+}
+
+void ManageAccounts::exportToDatabase()
+{
+	using account_interface::store_account;
+
+
+	boost::filesystem::path p{QFileDialog::getSaveFileName(global::main_window, "Choose the database name: ", 
+		QString::fromStdString(global::root.string()), "SQLite Databases (*.db)").toStdWString()};
+	
+	if(!p.string().empty())
+	{
+		for(auto it = this->basic_info.begin(); it != this->basic_info.end(); ++it)
+		{
+			store_account(utility::load<data::account_data>(it->id), p);
+		}
+	}
 }
 
