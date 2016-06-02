@@ -24,7 +24,7 @@ namespace
 {
 	QString account_display(const data::account_data&);
 	std::string fpoint_acc(const std::string&, const unsigned int&);
-
+	
 
 
 	inline QString account_display(const data::account_data& a)

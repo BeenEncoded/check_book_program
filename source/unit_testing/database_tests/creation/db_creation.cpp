@@ -8,7 +8,6 @@
 #include <QDate>
 
 #include "db_creation.hpp"
-#include "interface/mysql_account_interface.hpp"
 #include "utility/database.hpp"
 #include "utility/file_loader.hpp"
 #include "unit_testing/random_data.hpp"
@@ -16,6 +15,42 @@
 namespace
 {
 	constexpr const char* const invalid_chars{"\'\""};
+
+	template<typename type> struct mysql_type;
+
+
+	/* Some template meta programming to help with typing
+	SQL types: */
+	template<typename t>
+	struct mysql_type
+	{
+		static constexpr const char* const type{ nullptr };
+	};
+
+	template<>
+	struct mysql_type<data::value_t>
+	{
+		static constexpr const char* const type{ "BIGINT(64)" };
+	};
+
+	template<>
+	struct mysql_type<QString>
+	{
+		static constexpr const char* const type{ "MEDIUMTEXT(500)" };
+	};
+
+	template<>
+	struct mysql_type<utility::ID_T>
+	{
+		static constexpr const char* const type{ "INTEGER" };
+	};
+
+	template<>
+	struct mysql_type<QDate>
+	{
+		static constexpr const char* const type{ "DATE" };
+	};
+
 
 	void create_account_table(utility::database_class&);
 	data::account_data read_account(QSqlQuery&);
@@ -39,16 +74,16 @@ namespace
 	inline void create_account_table(utility::database_class& db)
 	{
 		db.query("CREATE TABLE IF NOT EXISTS accounts (\
-id " + std::string{ account_interface::mysql_type<utility::ID_T>::type } +" PRIMARY KEY AUTOINCREMENT NOT NULL,\n\
-name " + std::string{ account_interface::mysql_type<QString>::type } +" NOT NULL DEFAULT \"\"\
+id " + std::string{mysql_type<utility::ID_T>::type } +" PRIMARY KEY AUTOINCREMENT NOT NULL,\n\
+name " + std::string{mysql_type<QString>::type } +" NOT NULL DEFAULT \"\"\
 )");
 		db.query("CREATE TABLE IF NOT EXISTS transactions (\
 key INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n\
-id " + std::string{ account_interface::mysql_type<utility::ID_T>::type } +" NOT NULL DEFAULT 0,\n\
-value " + std::string{ account_interface::mysql_type<data::value_t>::type } +" NOT NULL DEFAULT \"\",\n\
-date " + std::string{ account_interface::mysql_type<QDate>::type } +" NOT NULL DEFAULT 0,\n\
-name " + std::string{ account_interface::mysql_type<QString>::type } +" NOT NULL DEFAULT \"\",\n\
-description " + std::string{ account_interface::mysql_type<QString>::type } +" NOT NULL DEFAULT \"\"\
+id " + std::string{mysql_type<utility::ID_T>::type } +" NOT NULL DEFAULT 0,\n\
+value " + std::string{mysql_type<data::value_t>::type } +" NOT NULL DEFAULT \"\",\n\
+date " + std::string{mysql_type<QDate>::type } +" NOT NULL DEFAULT 0,\n\
+name " + std::string{mysql_type<QString>::type } +" NOT NULL DEFAULT \"\",\n\
+description " + std::string{mysql_type<QString>::type } +" NOT NULL DEFAULT \"\"\
 )");
 	}
 
