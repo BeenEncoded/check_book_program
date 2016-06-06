@@ -14,7 +14,8 @@ CONFIG(release, debug|release) {
     DESTDIR = build/release
 	LIBS += "C:\Users\lib\x64\libboost_system-vc140-mt-1_60.lib" \
 			"C:\Users\lib\x64\libboost_filesystem-vc140-mt-1_60.lib" \
-			"C:\Users\lib\x64\libboost_regex-vc140-mt-1_60.lib"
+			"C:\Users\lib\x64\libboost_regex-vc140-mt-1_60.lib" \
+			"C:\Users\lib\x64\botan.lib"
 }
 
 #debug libs
@@ -23,7 +24,8 @@ CONFIG(debug, debug|release) {
     DESTDIR = build/debug
 	LIBS += "C:\Users\lib\x64\libboost_system-vc140-mt-gd-1_60.lib" \
 			"C:\Users\lib\x64\libboost_filesystem-vc140-mt-gd-1_60.lib" \
-			"C:\Users\lib\x64\libboost_regex-vc140-mt-gd-1_60.lib"
+			"C:\Users\lib\x64\libboost_regex-vc140-mt-gd-1_60.lib" \
+			"C:\Users\lib\x64\botan_debug.lib"
 }
 
 OBJECTS_DIR = $$DESTDIR/.obj
