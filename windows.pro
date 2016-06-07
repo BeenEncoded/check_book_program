@@ -1,4 +1,4 @@
-QT += core gui widgets sql
+QT += core gui widgets sql printsupport
 CONFIG += C++14
 QMAKE_CXXFLAGS += /IC:\Users\include #additional includes
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets

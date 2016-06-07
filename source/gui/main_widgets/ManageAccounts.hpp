@@ -3,6 +3,9 @@
 #include <QWidget>
 #include <QListWidgetItem>
 #include <vector>
+#include <QMenu>
+#include <utility>
+#include <QPrinter>
 
 #include "data/account.hpp"
 
@@ -28,10 +31,16 @@ public slots:
 	void updateButtons();
 	void transfer();
 	void exportToDatabase();
+	void printSummary();
+	void printSummaryToPrinter(QPrinter*);
     
 private:
     Ui::ManageAccounts *ui;
 	std::vector<data::account_data> basic_info;
+	std::shared_ptr<QMenu> menu;
+
+	std::string account_summary();
+
 };
 
 #endif

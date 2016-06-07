@@ -7,6 +7,13 @@
 #include <type_traits>
 #include <QFileDialog>
 #include <boost/filesystem.hpp>
+#include <QMenu>
+#include <QAction>
+#include <QPushButton>
+#include <utility>
+#include <QPainter>
+#include <QPrinter>
+#include <QPrintDialog>
 
 #include "ManageAccounts.hpp"
 #include "data/account.hpp"
@@ -64,10 +71,10 @@ namespace
 
 ManageAccounts::ManageAccounts(QWidget *parent) : 
         QWidget{parent},
-        ui{new Ui::ManageAccounts}
+        ui{new Ui::ManageAccounts},
+		menu{}
 {
     this->ui->setupUi(this);
-
 	this->basic_info = utility::load_basic<data::account_data>();
 
 	this->ui->account_list->clear();
@@ -123,7 +130,7 @@ void ManageAccounts::deleteAccount()
 			this->ui->account_list->clear();
 			for(unsigned int x{0}; x < this->basic_info.size(); ++x)
 			{
-				this->ui->account_list->addItem(this->basic_info[x].name);
+				this->ui->account_list->addItem(account_display(this->basic_info[x]));
 			}
 			this->updateButtons();
 		}
@@ -158,7 +165,15 @@ void ManageAccounts::updateButtons()
 	this->ui->new_transaction_button->setEnabled(enable);
 	this->ui->delete_button->setEnabled(enable);
 	this->ui->edit_button->setEnabled(enable);
-	this->ui->transfer_button->setEnabled(this->basic_info.size() > 1);
+	this->ui->menu_button->setEnabled(!this->basic_info.empty());
+
+	//refresh the menu items:
+	this->ui->menu_button->setMenu(nullptr);
+	this->menu = std::make_shared<QMenu>("Menu");
+	this->menu->addAction("Export to SQLite Database", this, &ManageAccounts::exportToDatabase)->setEnabled(!this->basic_info.empty());
+	this->menu->addAction("Transfer Money", this, &ManageAccounts::transfer)->setEnabled(this->basic_info.size() > 1);
+	this->menu->addAction("Print Summary", this, &ManageAccounts::printSummary)->setEnabled(!this->basic_info.empty());
+	this->ui->menu_button->setMenu(this->menu.get());
 }
 
 void ManageAccounts::transfer()
@@ -182,5 +197,50 @@ void ManageAccounts::exportToDatabase()
 			store_account(utility::load<data::account_data>(it->id), p);
 		}
 	}
+}
+
+void ManageAccounts::printSummary()
+{
+	QPrintDialog dialog{global::main_window};
+	dialog.setModal(true);
+	dialog.open(this, SLOT(printSummaryToPrinter(QPrinter*)));
+}
+
+void ManageAccounts::printSummaryToPrinter(QPrinter* printer)
+{
+	QPainter painter{printer};
+	painter.drawText(printer->pageRect(), Qt::TextWordWrap, QString::fromStdString(this->account_summary()));
+}
+
+std::string ManageAccounts::account_summary()
+{
+	std::string summary;
+	data::account_data account;
+	data::value_t balance{0};
+
+	for(auto it = this->basic_info.begin(); it != this->basic_info.end(); ++it)
+	{
+		//begin seperators:
+		if(it == this->basic_info.begin())
+		{
+			for(unsigned int x{0}; x < 70; ++x) summary += "-";
+			summary += "\n";
+		}
+
+		//account information:
+		account = utility::load<data::account_data>(it->id);
+		summary += (account.name.toStdString() + "\n");
+		balance = 0;
+		for(std::vector<data::transaction_data>::iterator it{account.transactions.begin()}; it != account.transactions.end(); ++it)
+		{
+			balance += it->value;
+		}
+		summary += ("Balance: " + fpoint_acc(std::to_string(((long double)balance / (long double)100)), 2) + "\n");
+
+		//end seperators:
+		for (unsigned int x{ 0 }; x < 70; ++x) summary += "-";
+		summary += "\n";
+	}
+	return summary;
 }
 
