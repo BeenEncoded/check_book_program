@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>583</width>
-    <height>368</height>
+    <height>421</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,9 +36,9 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="transfer_button">
+         <widget class="QPushButton" name="menu_button">
           <property name="text">
-           <string>Transfer Money</string>
+           <string>Menu</string>
           </property>
          </widget>
         </item>
@@ -173,7 +173,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>527</x>
-     <y>329</y>
+     <y>382</y>
     </hint>
     <hint type="destinationlabel">
      <x>582</x>
@@ -189,7 +189,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>365</x>
-     <y>329</y>
+     <y>382</y>
     </hint>
     <hint type="destinationlabel">
      <x>582</x>
@@ -205,7 +205,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>203</x>
-     <y>329</y>
+     <y>382</y>
     </hint>
     <hint type="destinationlabel">
      <x>513</x>
@@ -220,7 +220,7 @@
    <slot>newTransaction()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>461</x>
+     <x>457</x>
      <y>108</y>
     </hint>
     <hint type="destinationlabel">
@@ -245,22 +245,6 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>transfer_button</sender>
-   <signal>clicked()</signal>
-   <receiver>ManageAccounts</receiver>
-   <slot>transfer()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>149</x>
-     <y>84</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>258</x>
-     <y>769</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
  <slots>
   <slot>accountSelected(QListWidgetItem*)</slot>
@@ -270,5 +254,6 @@
   <slot>newTransaction()</slot>
   <slot>updateButtons()</slot>
   <slot>transfer()</slot>
+  <slot>exportToDatabase()</slot>
  </slots>
 </ui>
