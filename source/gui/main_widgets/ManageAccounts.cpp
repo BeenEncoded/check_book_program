@@ -181,6 +181,12 @@ void ManageAccounts::transfer()
 	MoneyTransfer t{this, this->basic_info};
 	t.setModal(true);
 	t.exec();
+	this->basic_info = utility::load_basic<data::account_data>();
+	this->ui->account_list->clear();
+	for(unsigned int x{0}; x < this->basic_info.size(); ++x)
+	{
+		this->ui->account_list->addItem(account_display(this->basic_info[x]));
+	}
 }
 
 void ManageAccounts::exportToDatabase()
